@@ -82,6 +82,8 @@ def run_tool(args):
         if args.debug:
             print(f"DEBUG: gemini_token: {gemini_token}")
             print(f"DEBUG: len(gemini_token): {len(gemini_token)}")
+            print(f"DEBUG: gemini_token is None: {gemini_token is None}")
+            print(f"DEBUG: (39 <= len(gemini_token) <= 40): {(39 <= len(gemini_token) <= 40)}")
         sys.exit(2)
 
     if '\n' in gemini_token:
