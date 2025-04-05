@@ -76,12 +76,13 @@ def run_tool(args):
         gemini_token = file.read()
 
     # TODO don't know if all tokens are 39 chars long. Please open new issue if your token has different length.
-    if gemini_token is None or len(gemini_token) != 39:
+    # 40 char len test is for extra '\n' added by vim. Extra new line is removed in next if statement.
+    if gemini_token is None or len(gemini_token) != 39 or len(gemini_token) != 40:
         print(f"Gemini token found in {token_location} could not be read, or is not formatted properly.")
-        if '\n' in gemini_token:
-            print("File should have only single line. Make sure it has only the token value in first line,"
-                  " nothing else.")
         sys.exit(2)
+
+    if '\n' in gemini_token:
+        gemini_token = gemini_token.replace('\n', '')
 
     if args.debug:
         print(f"DEBUG: gemini_token: {gemini_token}")
