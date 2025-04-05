@@ -79,6 +79,9 @@ def run_tool(args):
     # 40 char len test is for extra '\n' added by vim. Extra new line is removed in next if statement.
     if gemini_token is None or (39 <= len(gemini_token) <= 40):
         print(f"Gemini token found in {token_location} could not be read, or is not formatted properly.")
+        if args.debug:
+            print(f"DEBUG: gemini_token: {gemini_token}")
+            print(f"DEBUG: len(gemini_token): {len(gemini_token)}")
         sys.exit(2)
 
     if '\n' in gemini_token:
