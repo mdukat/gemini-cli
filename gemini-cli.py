@@ -148,7 +148,6 @@ def run_tool(args):
     gemini_output = j["candidates"][0]["content"]["parts"][0]["text"]
     print(gemini_output)
 
-    # TODO no matter the "--keep" argument, save last prompt and response to $TMPDIR/gemini-last.txt
     tmp_directory = os.getenv("TMPDIR", default="/tmp")
     if not os.access(tmp_directory, os.W_OK):
         if not args.quiet:
