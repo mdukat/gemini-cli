@@ -30,6 +30,8 @@ def main():
 
     # TODO argument to change gemini model. For now only use gemma-3-27b-it since it has the most "free" uses per day
     # TODO verbose argument, tho idk if needed for such simple script
+    # TODO "update" argument, which would download new version and install it in place of
+    #      the older script, as long as user has RW permissions to the file
     # TODO additional information about gemini token location and format
 
     parser.add_argument(
@@ -51,6 +53,8 @@ def run_tool(args):
     prompt = args.prompt
 
     if args.short:
+        # TODO add customization of this text by "~/.config/geminishort" file contents
+        #      used for example when using another language, so in PL it would be "Odpowiadaj krótko i zwięźle. "
         prompt = f"Keep your answer short. {args.prompt}"
 
     if args.debug:
@@ -134,6 +138,8 @@ def run_tool(args):
     j = response.json()
     gemini_output = j["candidates"][0]["content"]["parts"][0]["text"]
     print(gemini_output)
+
+    # TODO no matter the "--keep" argument, save last prompt and response to $TMPDIR/gemini-last.txt
 
     if args.keep:
         content_location = ("~/.gemini_logs/LOG_"
