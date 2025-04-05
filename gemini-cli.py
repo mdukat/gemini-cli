@@ -51,7 +51,7 @@ def run_tool(args):
     prompt = args.prompt
 
     if args.short:
-        prompt += ". Keep your answer short."
+        prompt = f"Keep your answer short. {args.prompt}"
 
     if args.debug:
         print(f"DEBUG: prompt: {prompt}")
