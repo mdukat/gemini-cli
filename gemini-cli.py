@@ -113,7 +113,7 @@ def run_tool(args):
         ],
     }
 
-    print("Sending request...")
+    print("Sending request...\n\n")
 
     response = requests.post(
         'https://generativelanguage.googleapis.com/v1beta/models/gemma-3-27b-it:generateContent',
