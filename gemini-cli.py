@@ -28,6 +28,12 @@ def main():
         help='Debug script. Will print your token to console! Use with care!'
     )
 
+    parser.add_argument(
+        '-q', '--quiet',
+        action='store_true',
+        help='Don\'t show errors. Debug overrides this'
+    )
+
     # TODO argument to change gemini model. For now only use gemma-3-27b-it since it has the most "free" uses per day
     # TODO verbose argument, tho idk if needed for such simple script
     # TODO "update" argument, which would download new version and install it in place of
@@ -42,6 +48,9 @@ def main():
 
     # Parse the arguments
     args = parser.parse_args()
+
+    if args.debug:
+        args.quiet = False
 
     # Call the main functionality
     run_tool(args)
@@ -139,7 +148,13 @@ def run_tool(args):
     gemini_output = j["candidates"][0]["content"]["parts"][0]["text"]
     print(gemini_output)
 
-    # TODO no matter the "--keep" argument, save last prompt and response to $TMPDIR/gemini-last.txt
+    tmp_directory = os.getenv("TMPDIR", default="/tmp")
+    if not os.access(tmp_directory, os.W_OK):
+        if not args.quiet:
+            print(f"ERROR: Can't write to {tmp_directory}. No write permissions.")
+    else:
+        with open(f"{tmp_directory}/gemini_last", "w") as file:
+            file.write("Prompt: " + prompt + "\n\n" + gemini_output)
 
     if args.keep:
         content_location = ("~/.gemini_logs/LOG_"
