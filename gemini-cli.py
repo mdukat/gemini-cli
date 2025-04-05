@@ -141,10 +141,12 @@ def run_tool(args):
                             "_" + str(uuid.uuid4()))
         if args.debug:
             print(f"DEBUG: content_location: {content_location}")
+        print(f"Keep: Saving log to {content_location}")
         content_location = os.path.expanduser(content_location)
         os.makedirs(os.path.dirname(content_location), exist_ok=True)
         with open(content_location, "w") as file:
-            file.write(gemini_output)
+            file.write("Prompt: " + prompt + "\n\n" + gemini_output)
+        print(f"Keep: Saved!")
 
 
 if __name__ == "__main__":
