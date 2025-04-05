@@ -60,6 +60,7 @@ def run_tool(args):
     possible_token_locations = ["./.geminitoken", "~/.geminitoken", "~/.config/geminitoken"]
     token_location = None
     for possible_token_location in possible_token_locations:
+        possible_token_location = os.path.expanduser(possible_token_location)
         if os.path.exists(possible_token_location) and os.access(possible_token_location, os.R_OK):
             token_location = possible_token_location
 
@@ -118,6 +119,7 @@ def run_tool(args):
     if not response.ok:
         error_content_location = "~/.gemini_logs/ERROR_" + str(uuid.uuid4())
         print(f"Something went wrong... Dumping output to {error_content_location}")
+        error_content_location = os.path.expanduser(error_content_location)
         os.makedirs(os.path.dirname(error_content_location), exist_ok=True)
         with open(error_content_location, "w") as file:
             file.write(response.text)
@@ -133,6 +135,7 @@ def run_tool(args):
                             "_" + str(uuid.uuid4()))
         if args.debug:
             print(f"DEBUG: content_location: {content_location}")
+        content_location = os.path.expanduser(content_location)
         os.makedirs(os.path.dirname(content_location), exist_ok=True)
         with open(content_location, "w") as file:
             file.write(gemini_output)
